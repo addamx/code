@@ -1,5 +1,5 @@
 define( [
-	"./core",
+	"./core",	//核心方法
 	"./selector",
 	"./traversing",
 	"./callbacks",

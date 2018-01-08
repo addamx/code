@@ -471,6 +471,7 @@ jQuery.extend( {
 			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
 		};
 
+		// 这个用于想删除event时, 由于proxy的guid和原事件的guid相同, 所以会一起删除或防止误删
 		// Set the guid of unique handler to the same of original handler, so it can be removed
 		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
 
@@ -484,6 +485,7 @@ jQuery.extend( {
 	support: support
 } );
 
+// 尝试让jquer对象拥有迭代器
 if ( typeof Symbol === "function" ) {
 	jQuery.fn[ Symbol.iterator ] = arr[ Symbol.iterator ];
 }
@@ -495,6 +497,7 @@ function( i, name ) {
 } );
 
 /**
+ * [private]
  * 是否为类数组对象:
  */
 function isArrayLike( obj ) {
