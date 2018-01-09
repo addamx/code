@@ -37,19 +37,20 @@ var
 	cssPrefixes = [ "Webkit", "Moz", "ms" ],
 	emptyStyle = document.createElement( "div" ).style;
 
-// Return a css property mapped to a potentially vendor prefixed property
+/**
+ * 添加当前浏览器对应的css vendor前缀, 如:WebKitTransform
+ * @param {string} name 
+ */
 function vendorPropName( name ) {
 
-	// Shortcut for names that are not vendor prefixed
 	if ( name in emptyStyle ) {
 		return name;
 	}
 
-	// Check for vendor prefixed names
 	var capName = name[ 0 ].toUpperCase() + name.slice( 1 ),
 		i = cssPrefixes.length;
 
-	while ( i-- ) {
+		while ( i-- ) {
 		name = cssPrefixes[ i ] + capName;
 		if ( name in emptyStyle ) {
 			return name;
@@ -57,8 +58,7 @@ function vendorPropName( name ) {
 	}
 }
 
-// Return a property mapped along what jQuery.cssProps suggests or to
-// a vendor prefixed property.
+// 查找vendor的css属性名, 并用jQuery.cssProps缓存结果
 function finalPropName( name ) {
 	var ret = jQuery.cssProps[ name ];
 	if ( !ret ) {

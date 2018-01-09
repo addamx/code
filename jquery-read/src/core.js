@@ -51,7 +51,6 @@ var
 
 jQuery.fn = jQuery.prototype = {
 
-	// The current version of jQuery being used
 	jquery: version,
 
 	constructor: jQuery,
@@ -218,24 +217,21 @@ jQuery.extend( {
 
 	isFunction: function( obj ) {
 
-		// Support: Chrome <=57, Firefox <=52
-		// In some browsers, typeof returns "function" for HTML <object> elements
-		// (i.e., `typeof document.createElement( "object" ) === "function"`).
-		// We don't want to classify *any* DOM node as a function.
+		// 有些浏览器会把<object>标签的typeof也当成 "function"
 		return typeof obj === "function" && typeof obj.nodeType !== "number";
 	},
 
 	isNumeric: function( obj ) {
 
-		// As of jQuery 3.0, isNumeric is limited to
-		// strings and numbers (primitives or objects)
-		// that can be coerced to finite numbers (gh-2662)
+		// 可以转为有限数值的number或string
+		// 旧版方法: !isNaN( parseFloat(obj) ) && isFinite( obj );  
 		var type = jQuery.type( obj );
 		return ( type === "number" || type === "string" ) &&
 
 			// parseFloat NaNs numeric-cast false positives ("")
 			// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 			// subtraction forces infinities to NaN
+			
 			!isNaN( obj - parseFloat( obj ) );
 	},
 
