@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>ajax</title>
+<script>
+
+function vote() {
+    var hh = document.createElement('img');
+    //利用图片src请求特性。发送请求
+    hh.setAttribute('src','./01-vote.php');
+    //document.getElementById('progress').appendChild(hh);
+}
+</script>
+    
+</head>
+<body>
+
+<p><img src="miku.jpg"></p>
+<p><a href="01-vote.php">投票</a></p>
+<p><input type="button" value="投票方法2" onclick="vote()"/></p>
+<div id="progress"></div>
+
+
+<div id="regres"></div>
+
+<!--利用iframe的特性，action后台，target回iframe-->
+<form action="02-reg.php" method="post" target="regzone">
+<p>用户名<input type="text" name="username"/></p>
+<p>EMAIL<input type="text" name="email"/></p>
+<input type="submit" name="submit" value="注册"/>
+</form>
+
+<iframe width="0" height="0" frameborder="0" name="regzone"></iframe>
+
+
+
+
+
+
+
+
+</body>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<title>新建网页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<script type="text/javascript">
+
+
+function sendfile() {
+    for(var i=0;i<=100;i++) {
+        for(var j=0,k=0;j<50000000;j++) {
+            k = 3.1415926*2.34567;
+        }
+    }
+}
+
+
+function test(sta) {
+    var chk = document.getElementsByTagName('input');    
+    for(var i=0; i<8; i++) {
+        chk[i].checked = sta;
+    }
+}
+
+</script>
+
+<style type="text/css">
+#progress{
+width:500px;
+height:30px;
+border:1px solid green;
+}
+
+#bar {
+width: 0%;
+height:100%;
+background:green;
+}
+
+</style>
+</head>
+    <body>
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        <input type="checkbox" value="" /><br />
+        
+        <input type="button" value="全选" onclick="test('checked');" />
+        <input type="button" value="全不选" onclick="test('');" />
+    </body>
+</html>

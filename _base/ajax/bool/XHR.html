@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>ajax</title>
+
+
+<script>
+function createXHR() {
+var xhr;
+if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xhr=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+    xhr=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhr;
+}
+
+function vote1() {
+    //制造请求
+    var xhr=createXHR();
+    //打开连接
+    xhr.open('GET','./02-vote.php',true);
+    //发送请求
+    xhr.send(null);
+    console.log(xhr);
+    
+    //绑定监听函数
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            str = "状态码是" + this.status + '<br/>';
+            str = str + '状态文字是' + this.statusText + '<br/>';
+            str = str + '返回类型是:' + this.getResponseHeader('Content-Type') + '<br/>';
+            str = str + '返回的主体的长度是' + this.getResponseHeader('content-Length') + '<br/>';
+            str = str + '返回的内容是' + this.responseText + '<br/>';
+            str = str + '所有头部信息' + this.getAllResponseHeaders();
+            
+
+            var pg = document.getElementById("progress");
+            pg.innerHTML = str;
+        }
+    }
+}
+
+
+function ajaxreg() {
+    var xhr = createXHR();
+    xhr.open('POST','./07-ajaxreg.php',true);
+
+    var un = document.getElementById('username').value;
+    var eml = document.getElementById('email').value;
+    
+    //post内容前一定要声明内容格式
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('username=' + un + '&email=' + eml);
+    
+    
+    //监听状态变化
+    //reponseText 或responseXML
+    /*  reponseText作为普通文本返回类型时，又有以下几种常用的变通形式
+        0：返回简短的标志字符串，如0,1,ok 
+        1：后台返回大段的html代码，直接innerHTML到前端页面
+        2：json格式
+    */
+    xhr.onreadystatechange = function() {
+        if (this.readyState==4 && this.status == 200) {
+            alert(this.responseText);
+        }
+    }
+    
+    //阻止表单
+    return false;   
+}
+
+
+//获取json
+function returnjson() {
+    var xhr = createXHR();
+    xhr.open('GET','08-returnjson.php',true);
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState ==4 && this.status == 200) {
+            var book = eval('('+this.responseText+')');
+            alert(this.responseText);
+            document.getElementById('title').innerHTML=book.title;
+            document.getElementById('intro').innerHTML=book.intro;
+        }
+    }
+    xhr.send(null);
+}
+
+
+
+
+
+
+</script>
+
+<body>
+<button type="button" onclick='returnjson()'>返回json</button>
+<p id='title'></p>
+<p id='intro'></p>
+
+<p><input type="button" value="投票方法-2" onclick="vote1()"/></p>
+<div id="progress"></div>
+<form action='07-ajaxreg.php' method='post' target='regzone' onsubmit='return ajaxreg();'>
+    <p>用户名：<input type='text' id='username' /></p>
+    <p>邮箱地址：<input type='text' id='email' /></p>
+    <p><input type='submit' name='注册' /></p>
+</form>
+<iframe width="0" height="0" frameBorder="0" name="regzone"></frame>
+
+
+
+
+</body>
+
+</html>

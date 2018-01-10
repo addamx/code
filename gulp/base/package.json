@@ -1,0 +1,27 @@
+{
+  "name": "gulp",
+  "version": "1.0.0",
+  "description": "npm install gulp-uglify gulp-watch-path stream-combiner2 gulp-sourcemaps gulp-clean-css gulp-autoprefixer gulp-less gulp-imagemin gulp-util --save-dev",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.4.0",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-less": "^3.3.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch-path": "^0.1.0",
+    "install": "^0.10.1",
+    "node-sass": "^4.5.3",
+    "npm": "^4.6.1",
+    "sass": "^0.5.0",
+    "stream-combiner2": "^1.1.1"
+  }
+}
