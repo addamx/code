@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title><%= htmlWebpackPlugin.options.title %></title>
+	<script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+	<!-- htmlWebpackPlugin.files.chunks.main.entry 用于调用生成的文件名, 这是options.inject应该是false, 否则这里重复引用了js -->
+
+</head>
+<body>
+
+<script type="text/javascript">
+//将生成js文件的内容直接打印在模板里
+	<%= 
+	compilation.assets[
+		htmlWebpackPlugin.files.chunks.main.entry.substr(
+			htmlWebpackPlugin.files.publicPath.length)
+		].source()
+	%>
+</script>
+
+
+
+
+
+
+<!-- 我是一行注释 -->
+
+	<code>htmlWebpackPlugin.files</code>
+	<% for (var key in htmlWebpackPlugin.files) { %>
+		<%= key %> : <%= JSON.stringify(htmlWebpackPlugin.files[key]) %>
+	<% } %>
+	<hr>
+
+	<code>htmlWebpackPlugin.options</code>
+	<% for (var key in htmlWebpackPlugin.options) { %>
+		<%= key %> : <%= JSON.stringify(htmlWebpackPlugin.options[key]) %>
+	<% } %>
+	
+</body>
+</html>

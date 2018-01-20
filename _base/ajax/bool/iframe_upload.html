@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>jsonp-(jQuery)</title>
+
+
+<script src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script type="text/javascript">
+/*
+1.捕捉表单提交动作
+2.创建一个iframe
+3.把表单的target指向该iframe
+4.去掉该iframe
+*/
+function iframeup() {
+    var iframe = 'up' + Math.random();  //随机上传id
+    $('<iframe name="' + iframe + '" width="0" height="0" frameBorder="0"></iframe>').appendTo($('body'));
+    $("form:first").attr('target',iframe);
+    $('#progress').html('<img width="50px" height="50px" src="loading.gif"/>');
+}
+
+
+
+</script>
+<style type="text/css">
+    p {
+        border:1px solid gray;
+    }
+</style>
+
+</head>
+<body>
+<h1>iframe上次文件</h1>
+<div id="progress"></div>
+<form action="iframeup.php" method="post" enctype="multipart/form-data" onsubmit="return iframeup();">
+<p><input type="file" name="pic" /></p>
+<p><input type="submit" name="submit" /></p>
+</form>
+
+
+</body>
+</html>

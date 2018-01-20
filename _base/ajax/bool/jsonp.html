@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>jsonp-(jQuery)</title>
+<script src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+//JQuery的jsonp格式跨域请求 例子来源http://www.w3school.com.cn/jquery/ajax_getjson.asp
+//jQuery的url callback为?时, 返回的是"(....)"的不带任何函数名, 需要再定义
+//语法: jQuery.getJSON(url,data,success(data,status,xhr)), data可选
+
+$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tagmode=any&format=json&jsoncallback=?", 
+    {'tags':'miku'},
+    function(data){$.each(data.items, function(i,item){
+        $("<img/>").attr("src", item.media.m).appendTo("#images");
+        if ( i == 3 ) return false;
+    });
+});
+
+
+//相当于以下方法
+/*
+$.ajax({
+    url: "http://api.flickr.com/services/feeds/photos_public.gne?tagmode=any&format=json&jsoncallback=?",
+    type: 'get',
+    data: {'tags':'miku'},
+    dataType: 'json',
+    success: function(data){
+        $.each(data.items, 
+        function(i,item){
+            $("<img/>").attr("src", item.media.m).appendTo("#images");
+            if ( i == 3 ) return false;
+        });
+    }
+    
+});
+*/
+
+//原生js
+/*
+    var kw = "miku";
+    var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + kw + "&tagmode=any&format=json&jsoncallback=fcimg";
+    
+    //动态新建script标签和设置src
+    var src = document.createElement('script');
+    src.setAttribute('type', 'text/javascript');
+    src.setAttribute('src', url);
+    document.getElementsByTagName('head')[0].appendChild(src); 
+
+
+
+function fcimg(data) {
+    console.log(data);
+    var imgs = data.items;
+    for (var i in imgs) {
+        var img = document.createElement('img');
+        img.setAttribute('src',imgs[i].media.m);
+        document.getElementById("images").appendChild(img);
+    }
+}
+*/
+
+</script>
+</head>
+
+<body>
+<div id="images"></div>
+
+
+</body>
