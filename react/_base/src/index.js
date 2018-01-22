@@ -5,10 +5,16 @@ import { Provider } from 'react-redux'
 import Routes from './routes'
 
 
+import Performance from './component/Performance'
+
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Routes />
-  </Provider>,
+  <div>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
+    <Performance />
+  </div>,
   document.getElementById('root')
 );
 

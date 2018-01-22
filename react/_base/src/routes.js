@@ -6,6 +6,7 @@ import Base from './component/Base'
 import Refs from './component/Refs'
 import Life from './component/Life'
 import FilterTable from './component/FilterTable'
+import DragComponent from './component/DragComponent'
 
 const Routes = () => (
   <Router>
@@ -14,7 +15,7 @@ const Routes = () => (
       <Route path="/base" component={Base}/>
       <Route path="/refs" component={Refs}/>
       <Route path="/Life" component={Life}/>
-      <Route path="/filtertable" component={FilterTable}/>
+      <Route path="/drag" component={DragComponent}/>
     </Switch>
   </Router>
 )
