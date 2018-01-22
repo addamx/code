@@ -9,6 +9,7 @@ export default () => {
         <li><Link to="/refs">Refs</Link></li>
         <li><Link to="/life">life</Link></li>
         <li><Link to="/filtertable">filtertable</Link></li>
+        <li><Link to="/testpurecomponent">TestPureComponent</Link></li>
       </ul>
     </div>
   )
