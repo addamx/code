@@ -10,6 +10,7 @@ export default () => {
         <li><Link to="/life">life</Link></li>
         <li><Link to="/filtertable">filtertable</Link></li>
         <li><Link to="/testpurecomponent">TestPureComponent</Link></li>
+        <li><Link to="/drag">Drag Component</Link></li>
       </ul>
     </div>
   )
