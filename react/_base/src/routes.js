@@ -7,7 +7,11 @@ import Refs from './component/Refs'
 import Life from './component/Life'
 import FilterTable from './component/FilterTable'
 import TestPureComponent from './component/TestPureComponent'
-import DragComponent from './component/DragComponent'
+
+import asyncComponent from './component/wrapper/AsyncComponent'
+
+const DragComponent = asyncComponent(() => import('./component/DragComponent'))
+
 
 const Routes = () => (
   <Router>
