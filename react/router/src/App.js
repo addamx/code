@@ -27,6 +27,7 @@ class Form extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const { isBlocking } = this.state
 
     return (

@@ -4,11 +4,11 @@ import { createStore } from 'redux';
 
 /**
  * http://qingbob.com/redux-performance-01-basic/
- * 
+ *
  * 避免列表全部渲染的方法:
  * 1. shouldComponentUpdate
  * 2. 让 item 的 state 直接关联 store
- * 
+ *
  * 注意事项:
  * 1. 不要使用这样的赋值 `options={this.props.options || []}` 否则可能每次都是赋值新空数组
  * 2. 在事件中使用新建的函数: `onClick={this.update.bind(this)}` 或 `onClick={() => {console.log('test')}}`
@@ -34,7 +34,7 @@ const itemReducer = (state = {}, action) => {
 const itemsReducer = (state = initState, action) => {
  switch(action.type) {
     case 'MARK':
-      return state.map((item) => 
+      return state.map((item) =>
         action.id === item.id ? itemReducer(item, action) : item
       )
     default:
@@ -114,7 +114,7 @@ export default () => (
     <h5>阻止列表重复渲染</h5>
     <Provider store={store()}>
       <ReItems />
-    </Provider> 
+    </Provider>
   </div>
 )
 
