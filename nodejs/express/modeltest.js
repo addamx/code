@@ -1,6 +1,16 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-//
+
+//===============自递增序号====================
+var _i = 0;
+var s = {q: _i};
+Object.defineProperty(s, 'q', {
+  get: function() {
+    _i++;
+    return '\n#' + _i + '# ';
+  }
+})
+//===================================
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, '链接错误'))
 db.once('open', function(){
@@ -92,5 +102,19 @@ PersonModel.findByName('AMX', function(err, him) {
  */
 //##1 带callback
 PersonModel.findOne({'company': 'google'}, 'name age', function(err, person){
-  console.log('%s is %s old, work in %s', person.name, person.age, person.company); //'company' 不在获取的field, 所以person.company是'undefined'
+  console.log(s.q + 'Query with callback')
+  console.log('%s is %s years old, works in %s', person.name, person.age, person.company); //'company' 不在获取的field, 所以person.company是'undefined'
 })
+//##2 不带callback
+PersonModel
+  .find({
+    age: {$gt :14, $lt: 99},
+    company: {$in: ['google', 'Tencent']}
+  })          //返回query对象
+  .limit(2)
+  .sort({age: -1})
+  .select({name:1})
+  .exec(function(err, they){
+    console.log(s.q + 'query without cb:')
+    console.log(they)
+  })
