@@ -33,10 +33,9 @@ const fs = require('fs');
       next();
     }
   });
-  //简写: app.use('/path', someMiddleware); 不匹配自动调用next
+  //简写: app.use('/path', someMiddleware); [不匹配自动调用next]
   app.use("/home1", function (request, response, next) {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Welcome to the homepage!\n");
+    response.status(200).send('Welcome to the homepage(1)!\n')
   });
 })()
 
@@ -75,7 +74,7 @@ app.set("view engine", "jade");
   //（1）response.redirect方法
   response.redirect("/hello/anime");
   response.redirect("http://www.example.com");
-  response.redirect(301, "http://www.example.com"); 
+  response.redirect(301, "http://www.example.com");
   //（2）response.sendFile 发送文件
   response.sendFile("/path/to/anime.mp4");
   //（3）response.render 渲染网页模板
@@ -99,7 +98,7 @@ app.set("view engine", "jade");
  * HTTPs服务器
  */
 var https = require('https');
-function https() {
+var httpsServer = function() {
 
   var options = {
     key: fs.readFileSync('E:/ssl/myserver.key'),
@@ -113,4 +112,8 @@ function https() {
 
 
 
-app.listen(8000)
+var server = app.listen(8000, function(){
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('app listening at http://%s:%s', host, port);
+})

@@ -17,7 +17,7 @@ db.once('open', function () {
   console.log('opening')
 })
 
-var PersonScheme = new mongoose.Schema({
+var PersonSchema = new mongoose.Schema({
   name: String,
   age: Number,
   company: String
@@ -53,7 +53,7 @@ var PersonScheme = new mongoose.Schema({
  */
 
 
-PersonScheme
+PersonSchema
   .pre('find', function() {
     console.log(s.q + 'pre(find) MIDDLEWARE')
   })
@@ -82,7 +82,7 @@ PersonScheme
     console.log('this is last one')
     next()
   })
-var PersonModel = db.model('Person', PersonScheme);
+var PersonModel = db.model('Person', PersonSchema);
 
 var personEntity = new PersonModel({
   name: 'father',

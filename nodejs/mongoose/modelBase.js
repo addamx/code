@@ -21,37 +21,20 @@ db.once('open', function(){
  * 定义 Scheme
  */
 //添加属性
-var PersonScheme = new mongoose.Schema({
+var PersonSchema = new mongoose.Schema({
   name: String,
   age: Number,
   company: String
 })
-//添加虚拟属性
-PersonScheme.virtual('introduce').get(function(){
-  return this.name + ' is ' + this.age + ' years old.';
-})
-PersonScheme.virtual('moreyoung').set(function (v) {
-  this.age = v - 10;
-})
-//添加方法
-PersonScheme.methods.speak = function(_greeting) {
-  var greeting = this.name
-    ? "My name is " + this.name
-    : "I don't have a name";
-  console.log(greeting + ' ' + (_greeting || ''));
-}
-// Entity的方法
-PersonScheme.methods.findSameName = function(cb) {
-  return this.model('Person').find({name: this.name}, cb);
-}
-//Model的静态方法
-PersonScheme.statics.findByName = function(name, cb) {
-  return this.find({name: new RegExp(name, 'i')}, cb);
-}
+
+
+
+
+
 /**
  * 发布 Model
  */
-var PersonModel = db.model('Person', PersonScheme);
+var PersonModel = db.model('Person', PersonSchema);
 
 /**
  * 创建 Entity
@@ -61,10 +44,6 @@ var personEntity = new PersonModel({
   age: 18,
   company: 'google'
 });
-// 使用虚拟属性
-console.log(personEntity.introduce);
-personEntity.moreyoung = 27;
-console.log(personEntity.age);  //17   (27 - 10)
 
 
 
@@ -93,26 +72,20 @@ personEntity.save(function(err, person) {
 /**
  * test
  */
-// console.log(personEntity.name);
-// personEntity.speak();
-personEntity.findSameName(function(err, him){
-  // console.log('findSameName:')
-  // console.log(him)
-})
-PersonModel.findByName('AMX', function(err, him) {
-  // console.log('findByName:')
-  // console.log(him)
-})
-
 
 /**
  * # 查询
  */
-//##1 带callback
-PersonModel.findOne({'company': 'google'}, 'name age', function(err, person){
-  console.log(s.q + 'Query with callback')
-  console.log('%s is %s years old, works in %s', person.name, person.age, person.company); //'company' 不在获取的field, 所以person.company是'undefined'
-})
+//##1 带callback + options
+PersonModel.findOne(
+  {'company': 'google'},
+  'name age',   //(不)获取的field, 默认 null; 1. {name: 1}; 2. {company: false}; 3. '-company'
+  //{skip: 10},
+  function(err, person){
+    console.log(s.q + 'Query with callback')
+    console.log('%s is %s years old, works in %s', person.name, person.age, person.company); //'company' 不在获取的field, 所以person.company是'undefined'
+  }
+)
 //##2 不带callback [JSON]
 PersonModel
   .find({
@@ -140,7 +113,13 @@ PersonModel
     console.log(s.q + 'query without cb [builder]:')
     console.log(they)
   })
-
+//##4 为query添加chain操作
+PersonSchema.query.byName = function(name){
+  return this.find({name: new RegExp(name, 'i')});
+}
+/*
+PersonModel.query().byName('amx').exec(......)
+*/
 
 
 /**
