@@ -8,7 +8,10 @@ var connection
 window.addEventListener("load", function () {
 	var nickname = prompt("Choose a nickname")
 	if (nickname) {
-		connection = new WebSocket("ws://"+window.location.hostname+":8081")
+ connection = new WebSocket("ws://"+window.location.hostname+":8081")
+
+
+
 		connection.onopen = function () {
 			console.log("Connection opened")
 			connection.send(nickname)
@@ -18,7 +21,7 @@ window.addEventListener("load", function () {
 					connection.send(msg.value)
 				msg.value = ""
 				event.preventDefault()
-			}	
+			}
 		}
 		connection.onclose = function () {
 			console.log("Connection closed")

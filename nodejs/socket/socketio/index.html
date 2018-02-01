@@ -2,38 +2,45 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Simple websocket secure test</title>
-<script>
-var conn = new WebSocket("wss://127.0.0.1:8001")
-
-conn.onopen = function () {
-	console.log("Connection opened")
-	conn.send("hello world")
-}
-
-conn.onclose = function () {
-	console.log("Connection closed")
-}
-
-conn.onmessage = function (evt) {
-	console.info("Received "+evt.data)
-	conn.close()
-}
-
-conn.onerror = function () {
-	console.error("Error")
-}
-</script>
+<title>SocketIo chat</title>
+<script src="socket.io.js"></script>
 </head>
 
 <body>
-<p><strong>Notes:</strong></p>
-<ol>
-	<li>Open web console</li>
-	<li>Run index.js script with nodejs</li>
-	<li>Access "https://127.0.0.1:8001" in another tab. The browser should alert you about security, since the certificate is self-signed</li>
-	<li>Accept security exception and close that tab</li>
-	<li>Reload this page</li>
-</ol>
+<h1>Chat Room</h1>
+<input id="sendTxt" type="text" />
+<button id="sendBtn">发送</button>
+
+<script>
+var socket = io("ws://localhost:8082");
+function showMessage(str, type) {
+  var div = document.createElement('div');
+  div.innerHTML = str;
+  if (type == 'enter') {
+    div.style.color = 'blue';
+  } else if(type == 'leave') {
+    div.style.color = 'red'
+  }
+  document.body.appendChild(div)
+}
+
+document.getElementById('sendBtn').onclick = function() {
+  var txt = document.getElementById('sendTxt').value;
+  if(txt) {
+    socket.emit('message',txt)
+  }
+}
+
+socket.on('enter', function(data) {
+  showMessage(data, 'enter')
+})
+socket.on('message', function (data) {
+  showMessage(data, 'message')
+})
+socket.on('leave', function (data) {
+  showMessage(data, 'leave')
+})
+</script>
+
 </body>
 </html>
