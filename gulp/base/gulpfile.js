@@ -246,6 +246,7 @@ var declare = require('gulp-declare');
 // })
 
 
+
 gulp.task('default', [
     // build
     'uglifyjs', 'minifycss', 'lesscss', 'sasscss', 'image', 'copy', /*'templates',*/
