@@ -25,10 +25,66 @@ var createProxyFactory = function(fn) {
 
 
 
+/**
+ * 分批执行函数
+ * @param {数组} ary 
+ * @param {处理函数} fn 
+ * @param {每次操作的个数} count 
+ */
+var timeChunk = function(ary, fn, count) {
+  var obj, t;
+  var len = ary.length;
+  var start = function() {
+    for (var i = 0; i < Math.min(count || 1, ary.length); i++) {
+      var obj = ary.shift();
+      fn(obj);
+    }
+  }
+
+  return function() {
+    t = setInterval(function(){
+      if (ary.length === 0) {
+        return clearInterval(t);
+      }
+      start()
+    }, 200)
+  }
+}
+
 
 
 /**
- * 动画
+ * 事件代理:
+ * 1. 减少了访问 DOM 的次数，提升了性能；
+ * 2. 将子元素的事件处理程序统一绑定到其父元素，减少了对内存的占用；
+ * 3. 可以更好地管理事件处理程序，比如移除对某个事件处理程序的引用
+ * 接收两种调用方式 bindEvent(div1, 'click', 'a', function () {...}) 和 bindEvent(div1, 'click', function () {...}) 这两种
+ */
+var bindEvent = function(elem, type, selector, fn) {
+  if (fn == null) {
+      fn = selector
+      selector = null
+  }
+
+  elem.addEventListener(type, function (e) {
+      var target
+      if (selector) {
+          // 有 selector 说明需要做事件代理
+          target = e.target
+          if (target.matches(selector)) {
+              fn.call(target, e)
+          }
+      } else {
+          // 无 selector ，说明不需要事件代理
+          fn(e)
+      }
+  })
+}
+
+
+
+/**
+ * 动画(类)
  */
 var tween = {
   linear: function( t, b, c, d ){
