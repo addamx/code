@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const config = require('./webpack.base.conf')
 
 config.entry = {
-  'vue': './src/index.js'
+  'vui': './src/index.js'
 }
 
 config.output = {
