@@ -7,6 +7,7 @@ import Refs from './component/Refs'
 import Life from './component/Life'
 import FilterTable from './component/FilterTable'
 import TestPureComponent from './component/TestPureComponent'
+import Style from './component/style'
 
 import asyncComponent from './component/wrapper/AsyncComponent'
 
@@ -23,6 +24,7 @@ const Routes = () => (
       <Route path="/filtertable" component={FilterTable}/>
       <Route path="/testpurecomponent" component={TestPureComponent}/>
       <Route path="/drag" component={DragComponent}/>
+      <Route path="/style" component={Style}/>
     </Switch>
   </Router>
 )
