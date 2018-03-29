@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tabs</title>
+    <script src="../jquery-3.3.1.js"></script>
+    <script src="./jquery.tabs.js"></script>
+</head>
+<body>
+    <div id="test">
+        <ul class="nav">
+            <li name="tab1">tab1</li>
+            <li name="tab2">tab2</li>
+            <li name="tab3">tab3</li>
+        </ul>
+        <div id="tab1">this is tab1</div>
+        <div id="tab2">this is tab2</div>
+        <div id="tab3">this is tab3</div>
+    </div>
+<script>
+var test = $('#test').tabs();
+</script>
+</body>
+</html>
