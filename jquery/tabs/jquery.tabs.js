@@ -63,6 +63,7 @@ Tabs.prototype.show = function(name){
   this.tabs[this.showName].hide();
   this.showName = name;
   this.tabs[name].show();
+  this.container.trigger('tabs.show', this.showName);
 }
 
 function Tab($menu, $panel, $tabOp) {

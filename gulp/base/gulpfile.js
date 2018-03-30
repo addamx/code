@@ -2,14 +2,15 @@ var gulp = require('gulp')
 var gutil = require('gulp-util')
 var uglify = require('gulp-uglify')
 var watchPath = require('gulp-watch-path')
-var combiner = require('stream-combiner2')
+var combiner = require('stream-combiner2')//整合stream处理错误
 var sourcemaps = require('gulp-sourcemaps')
 var minifycss = require('gulp-minify-css')
 var autoprefixer = require('gulp-autoprefixer')
 var less = require('gulp-less')
 var sass = require('gulp-ruby-sass')
 var imagemin = require('gulp-imagemin')
-
+var concat = require('gulp-concat') //合并
+var rollup = require('gulp-rollup');
 
 var handleError = function (err) {
     var colors = gutil.colors;
@@ -20,6 +21,21 @@ var handleError = function (err) {
     gutil.log('message: ' + err.message)
     gutil.log('plugin: ' + colors.yellow(err.plugin))
 }
+
+gulp.task('rollup', function() {
+    var combined = combiner.obj([
+        gulp.src('./src/js/**/*.js')
+            .pipe(rollup({
+                input: './src/js/index.js',
+                output: {
+                    format: 'es'
+                }
+            })),
+        // concat('app.js'),
+        gulp.dest('./dist/js/')
+    ])
+    combined.on('error', handleError)
+})
 
 gulp.task('watchjs', function () {
     gulp.watch('./src/js/**/*.js', function (event) {
