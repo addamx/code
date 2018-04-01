@@ -6,7 +6,7 @@ const
       path = require('path'),
       http = require('http');
 
-// 
+//
 var root = path.resolve(process.argv[2] || '');
 
 console.log('Static root dir:' + root);
@@ -15,7 +15,7 @@ console.log('Static root dir:' + root);
 var server = http.createServer(function (request, response) {
     // 获得URL 的path，类似 '/css/bootstrap.css':
     var pathName = url.parse(request.url).pathname;
-	pathName.slice(-1) === '/' && pathName += 'index.html'
+	pathName.slice(-1) === '/' && (pathName += 'index.html');
     // 获得对应的本地文件路径，类似 '/srv/www/css/bootstrap.css':
     var filePath = path.join(root, pathName);
 
