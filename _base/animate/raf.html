@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #sample {
+      position: absolute;
+      background: red;
+      width: 100px;
+      height: 100px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="sample" />
+  <script type="text/javascript">
+    var lastTimeStamp = new Date().getTime();
+
+    /**
+     * 模拟实现requestAnimationFrame
+     * 动画拆分位一个个setTimeout
+     * requestAnimationFrame 会根据上一帧动画是否超过16ms, 如果超过, 则delay为0
+     * requestAnimationFrame 会将当前timestamp传给render函数`fn(currTimeStamp)`, 以此帮助render函数判断动画进程
+     * 
+     **/
+    function raf(fn) {
+      var currTimeStamp = new Date().getTime();
+      var delay = Math.max(0, 16 - (currTimeStamp - lastTimeStamp));
+      var handle = setTimeout(function () {
+        fn(currTimeStamp);
+      }, delay);
+      lastTimeStamp = currTimeStamp;
+      return handle;
+    }
+
+    var left = 0;
+    var animatedElement = document.getElementById("sample");
+
+    var startTimestamp = null;
+
+    /**
+     * timestamp是由requestAnimationFrame提供的, 
+     **/
+    function render(timestamp) {
+      if (!startTimestamp) startTimestamp = timestamp;
+      var progress = timestamp - startTimestamp;
+      // 每16ms递增20px, 
+      // left += 20;
+      // 换入动画, 速度越来越快
+      left += progress / 16;
+
+
+      animatedElement.style.left = left + 'px';
+      // 判断句改为 progress < 2000则2秒内行动
+      if (left < 400) {
+        return requestAnimationFrame(render);
+      }
+      console.timeEnd();
+    }
+
+    console.time();
+    requestAnimationFrame(render);
+
+  </script>
+</body>
+
+</html>
