@@ -1,10 +1,11 @@
 import React, { Children } from "react";
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 
 import buttonStyles from "./buttonStyles";
 import Wrapper from "./Wrapper";
 
-export default props => {
+const Button = props => {
   const StyledButton = styled.button`
     ${buttonStyles};
   `;
@@ -17,7 +18,7 @@ export default props => {
 
   if (props.onClick) {
     button = (
-      <StyledButton onClick={props.onClick}>
+      <StyledButton onClick={props.onClick} animate={props.animate}>
         {Children.toArray(props.children)}
       </StyledButton>
     );
@@ -25,5 +26,15 @@ export default props => {
 
   return <Wrapper>{button}</Wrapper>;
 };
+
+
+
+Button.propTypes = {
+  href: PropTypes.string,
+  onClick: PropTypes.func,
+  children: PropTypes.node.isRequired,
+};
+
+export default Button;
 
 

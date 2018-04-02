@@ -1,4 +1,14 @@
-import { css } from "styled-components";
+import { css, keyframes } from "styled-components";
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+`
+
 
 const buttonStyles = css`
   display: inline-block;
@@ -16,11 +26,13 @@ const buttonStyles = css`
   font-size: 16px;
   border: 2px solid #41addd;
   color: #41addd;
+  animation: ${props => props.animate ? `${spin} 1s linear infinite` : 'none'};
 
   &:active {
     background: #41addd;
     color: #fff;
   }
 `;
+
 
 export default buttonStyles;
