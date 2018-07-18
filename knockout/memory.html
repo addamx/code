@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Memory</title>
+  <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<div>
+  <a href="http://knockoutjs.com/documentation/component-binding.html#disposal-and-memory-management">http://knockoutjs.com/documentation/component-binding.html#disposal-and-memory-management</a>
+</div>
+
+<p>
+  <mark>
+    注意需要被disposal的内容:<br>
+    1. 引用外部observable的compute<br>
+    2. observable的subscribe<br>
+    3. setInterval<br>
+  </mark>
+</p>
+
+<div data-bind="{
+  component: {
+    name: 'SomeComponentViewModel'
+  }
+}"></div>
+
+<pre>
+    var someExternalObservable = ko.observable(123);
+ 
+    function SomeComponentViewModel() {
+        this.myComputed = ko.computed(function() {
+            return someExternalObservable() + 1;
+        }, this);
+     
+        this.myPureComputed = ko.pureComputed(function() {
+            return someExternalObservable() + 2;
+        }, this);
+     
+        this.mySubscription = someExternalObservable.subscribe(function(val) {
+            console.log('The external observable changed to ' + val);
+        }, this);
+     
+        this.myIntervalHandle = window.setInterval(function() {
+            console.log('Another second passed, and the component is still alive.');
+        }, 1000);
+    }
+     
+    SomeComponentViewModel.prototype.dispose = function() {
+        this.myComputed.dispose();
+        this.mySubscription.dispose();
+        window.clearInterval(this.myIntervalHandle);
+        // this.myPureComputed doesn't need to be manually disposed.
+    }
+     
+    ko.components.register('your-component-name', {
+        viewModel: SomeComponentViewModel,
+        template: 'some template'
+    });
+</pre>
+<script>
+  var someExternalObservable = ko.observable(123);
+
+  function SomeComponentViewModel() {
+    this.myComputed = ko.computed(function () {
+      return someExternalObservable() + 1;
+    }, this);
+
+    this.myPureComputed = ko.pureComputed(function () {
+      return someExternalObservable() + 2;
+    }, this);
+
+    this.mySubscription = someExternalObservable.subscribe(function (val) {
+      console.log('The external observable changed to ' + val);
+    }, this);
+
+    this.myIntervalHandle = window.setInterval(function () {
+      console.log('Another second passed, and the component is still alive.');
+    }, 1000);
+  }
+
+  SomeComponentViewModel.prototype.dispose = function () {
+    this.myComputed.dispose();
+    this.mySubscription.dispose();
+    window.clearInterval(this.myIntervalHandle);
+    // this.myPureComputed doesn't need to be manually disposed.
+  }
+
+  ko.components.register('your-component-name', {
+    viewModel: SomeComponentViewModel,
+    template: 'some template'
+  });
+</script>

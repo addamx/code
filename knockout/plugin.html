@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plugins</title>
+  <script src="/node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+  <script src="/plugin/knockout-es5.js"></script>
+  <script src="/plugin/knockout-fast-foreach.js"></script>
+  <script src="/plugin/knockout-repeat.js"></script>
+  <style>
+    .folders {
+      background: palegoldenrod;
+    }
+
+    .folders li {
+      cursor: pointer;
+    }
+
+    .folders li.selected {
+      font-weight: bold;
+    }
+
+    .mails {
+      background: beige;
+    }
+    .mails tbody tr {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Folders -->
+  <ul class="folders" data-bind="fastForEach: folders">
+    <li data-bind="text: $data, 
+      css: { selected: $data == $root.chosenFolderId },
+      click: $root.goToFolder"></li>
+  </ul>
+
+  <!-- Mails grid -->
+  <table class="mails" data-bind="with: chosenFolderData">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody data-bind="repeat: {foreach: mails, item: '$row'}">
+      <tr>
+        <tr data-bind="click: $root.goToMail">
+          <td data-bind="text: $row().from"></td>
+          <td data-bind="text: $row().to"></td>
+          <td data-bind="text: $row().subject"></td>
+          <td data-bind="text: $row().date"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <!-- with: 表示一个scope -->
+  <div class="viewMail" data-bind="with: chosenMailData">
+    <div class="mailInfo">
+      <h1 data-bind="text: subject"></h1>
+      <p>
+        <label>From</label>:
+        <span data-bind="text: from"></span>
+      </p>
+      <p>
+        <label>To</label>:
+        <span data-bind="text: to"></span>
+      </p>
+      <p>
+        <label>Date</label>:
+        <span data-bind="text: date"></span>
+      </p>
+    </div>
+    <p class="message" data-bind="html: messageContent" />
+  </div>
+
+
+  <script>
+    /*
+    knockout-es5, 使用getter和setters使对象在不需要observable();
+      - ko.track(this);
+      - ko.track(someModelObject, ['firstName', 'lastName', 'email']);
+    fast-foreach:
+      - data-bind="fastForEach: mails"
+    repeat: https://github.com/mbest/knockout-repeat
+      - < tbody data-bind="repeat: {foreach: mails, item: '$row'}">
+        <td data-bind="text: $row().from"></td>
+    */
+
+    class WebmailViewModel {
+      constructor () {
+        this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+        this.chosenFolderId = '';
+        this.chosenFolderData = '';
+        this.chosenMailData = '';
+        console.log(Object.getOwnPropertyDescriptor(this, 'chosenFolderId'));
+        // {value: "", writable: true, enumerable: true, configurable: true}
+        ko.track(this);
+        console.log(Object.getOwnPropertyDescriptor(this, 'chosenFolderId'));
+        // {get: ƒ, set: ƒ, enumerable: true, configurable: true}
+
+        this.init = this.init.bind(this);
+        this.goToFolder = this.goToFolder.bind(this);
+        this.goToMail = this.goToMail.bind(this);
+
+        this.init();
+      }
+
+      init () {
+        this.goToFolder(this.folders[0]);
+      }
+
+      goToFolder (folder) {
+        this.chosenFolderId = folder;
+        this.chosenMailData = null;
+        mock.call(this, folder, 'chosenFolderData');
+      }
+
+      goToMail (mail) {
+        this.chosenFolderData = null;
+        mock.call(this, 'mail', 'chosenMailData', mail);
+      };
+    }
+
+    ko.applyBindings(new WebmailViewModel());
+
+    
+
+
+    function mock (type, propname, payload) {
+      switch (type) {
+        case 'Inbox':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Bily', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Bily', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Bily', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Bily', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Archive':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Smith', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Smith', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Sent':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Spam':
+          var result = {
+            mails: [
+              { from: 'xxxx', to: 'Addamx', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Smith', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Addamx', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'xxxx', to: 'Addamx', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'mail':
+          var result = {
+            subject:  'Subject~' + Math.ceil(Math.random() * 10000),
+            from: payload.from,
+            to: payload.to,
+            date: payload.date,
+            messageContent: `<h2>In no impression assistance contrasted</h2>
+                <p>Delightful unreserved impossible few estimating men favourable see entreaties. She propriety immediate was improving. He or entrance humoured likewise moderate. Much nor game son say feel. Fat make met can must form into gate. Me we offending prevailed discovery.</p>`
+          }
+      }
+      setTimeout(() => {
+        return this[propname] = result;
+      }, 500);
+    }
+  </script>
+
+
+</body>
+
+</html>

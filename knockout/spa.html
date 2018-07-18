@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Spa</title>
+  <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+  <style>
+    .folders {
+      background: palegoldenrod;
+    }
+
+    .folders li {
+      cursor: pointer;
+    }
+
+    .folders li.selected {
+      font-weight: bold;
+    }
+
+    .mails {
+      background: beige;
+    }
+    .mails tbody tr {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Folders -->
+  <ul class="folders" data-bind="foreach: folders">
+    <li data-bind="text: $data, 
+      css: { selected: $data == $root.chosenFolderId() },
+      click: $root.goToFolder"></li>
+  </ul>
+
+  <!-- Mails grid -->
+  <table class="mails" data-bind="with: chosenFolderData">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: mails">
+      <tr>
+        <tr data-bind="click: $root.goToMail">
+          <td data-bind="text: from"></td>
+          <td data-bind="text: to"></td>
+          <td data-bind="text: subject"></td>
+          <td data-bind="text: date"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <!-- Chosen mail -->
+  <!-- with: 表示一个scope -->
+  <div class="viewMail" data-bind="with: chosenMailData">
+    <div class="mailInfo">
+      <h1 data-bind="text: subject"></h1>
+      <p>
+        <label>From</label>:
+        <span data-bind="text: from"></span>
+      </p>
+      <p>
+        <label>To</label>:
+        <span data-bind="text: to"></span>
+      </p>
+      <p>
+        <label>Date</label>:
+        <span data-bind="text: date"></span>
+      </p>
+    </div>
+    <p class="message" data-bind="html: messageContent" />
+  </div>
+
+
+  <script>
+
+    function WebmailViewModel() {
+      // Data
+      var self = this;
+      self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+      self.chosenFolderId = ko.observable();
+      self.chosenFolderData = ko.observable();
+      self.chosenMailData = ko.observable();
+
+      // Behaviours
+      self.goToFolder = function (folder) {
+        self.chosenFolderId(folder);
+        self.chosenMailData(null); // Stop showing a mail
+        //$.get('/mail', { folder: folder }, self.chosenFolderData);
+        mock(folder, self.chosenFolderData)
+      }
+
+      self.goToMail = function (mail) {
+        self.chosenFolderData(null); // Stop showing a folder
+        // $.get("/mail", { mailId: mail.id }, self.chosenMailData);
+        mock('mail', self.chosenMailData, mail)
+      };
+
+      //init
+      self.goToFolder('Inbox');
+    };
+
+    ko.applyBindings(new WebmailViewModel());
+
+
+
+
+    function mock(type, cb, data) {
+      switch (type) {
+        case 'Inbox':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Bily', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Bily', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Bily', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Bily', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Archive':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Smith', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Smith', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Sent':
+          var result = {
+            mails: [
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'Addamx', to: 'Smith', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'Spam':
+          var result = {
+            mails: [
+              { from: 'xxxx', to: 'Addamx', subject: 'Hello World', date: '2018-5-10 11:00' },
+              { from: 'Smith', to: 'Addamx', subject: 'World', date: '2018-5-10 11:00' },
+              { from: 'Tom', to: 'Addamx', subject: 'Good!', date: '2018-5-10 11:00' },
+              { from: 'xxxx', to: 'Addamx', subject: 'Hello World', date: '2018-5-10 11:00' },
+            ]
+          };
+          break;
+        case 'mail':
+          var result = {
+            subject:  'Subject~' + Math.ceil(Math.random() * 10000),
+            from: data.from,
+            to: data.to,
+            date: data.date,
+            messageContent: `<h2>In no impression assistance contrasted</h2>
+<p>Delightful unreserved impossible few estimating men favourable see entreaties. She propriety immediate was improving. He or entrance humoured likewise moderate. Much nor game son say feel. Fat make met can must form into gate. Me we offending prevailed discovery.</p>`
+          }
+      }
+      setTimeout(() => {
+        return cb(result);
+      }, 1000);
+    }
+  </script>
+
+
+</body>
+
+</html>

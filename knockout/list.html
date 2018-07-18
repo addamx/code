@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>List</title>
+  <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h2>Your seat reservations</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Passenger name</th>
+        <th>Meal</th>
+        <th>Surcharge</th>
+        <th></th>
+      </tr>
+    </thead>
+    <!-- 显示被删除的item: `{....includeDestroyed: true}` -->
+    <!-- 如果不想用$data, 可以 `foreach: { data: people, as: 'person' }` 使用自定义的item名 -->
+    <tbody data-bind="foreach: {data:seats, afterRender:afterRender,afterAdd:afterAdd,beforeRemove:beforeRemove,beforeMove:beforeMove,afterMove:afterMove}">
+      <tr>
+        <td>
+          <!-- 在foreach的item里, 自动使用了item的scope, item对应$data, 这里`$data.name`和`name`效果一样 -->
+          <input data-bind="value: name" />
+        </td>
+        <td>
+          <!-- 在foreach的item中, 使用$root或者$parent才能调用根方法 -->
+          <!-- $index 获取索引值 -->
+          <select data-bind="options: $root.availableMeals, value: meal, optionsText: 'mealName'"></select>
+        </td>
+        <!-- 注意: formattedPrice是seat的值, price时meal()的值 -->
+        <td>
+          <strong data-bind="text: formattedPrice"></strong> - (
+          <span data-bind="text: meal().price"></span>)</td>
+        <!-- method -->
+        <td>
+          <a href="#" data-bind="click: $root.moveSeat">move</a>
+          <a href="#" data-bind="click: $root.removeSeat">Remove</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- 逻辑可以写在tpl, 在需要同时修改dom属性时, 比起写在view-modal中更便捷 -->
+  <button data-bind="click: addSeat, enable: seats().length < 5">Add anoymous seat</button>
+
+  <h3 data-bind="visible: totalSurcharge() > 0">
+    Total surcharge: $
+    <span data-bind="text: totalSurcharge().toFixed(2)"></span>
+  </h3>
+
+  <script>
+    // Class to represent a row in the seat reservations grid
+    function SeatReservation(name, initialMeal) {
+      this.name = name;
+      this.meal = ko.observable(initialMeal);
+
+      this.formattedPrice = ko.computed(function () {
+        var price = this.meal().price;
+        return price ? "$" + price.toFixed(2) : "free";
+      }, this);
+    }
+
+    // Overall viewmodel for this screen, along with initial state
+    function ReservationsViewModel() {
+      var self = this;
+
+      //foreach or data:bind="options: $root.availableMeals"
+      self.availableMeals = [
+        { mealName: "Standard (sandwich)", price: 0 },
+        { mealName: "Premium (lobster)", price: 34.95 },
+        { mealName: "Ultimate (whole zebra)", price: 290 }
+      ];
+
+      // Editable data
+      self.seats = ko.observableArray([
+        new SeatReservation("Steve", self.availableMeals[0]),
+        new SeatReservation("Bert", self.availableMeals[1]),
+        new SeatReservation("Addamx", self.availableMeals[2])
+      ]);
+
+      //method
+      self.addSeat = function () {
+        self.seats.push(new SeatReservation("anoymous", self.availableMeals[0]));
+      }
+      self.removeSeat = function (seat) {
+        self.seats.remove(seat)
+      }
+      self.moveSeat = function (seat) {
+        self.seats.remove(seat);
+        self.seats.push(seat);
+      }
+      self.totalSurcharge = ko.computed(function () {
+        var total = 0;
+        for (var i = 0; i < self.seats().length; i++)
+          total += self.seats()[i].meal().price;
+        return total;
+      })
+
+      // foreach API
+      //afterRender: 发生在每一次渲染, 包括初始化
+      self.afterRender = function (eles, obj) {
+        console.log(`afterRender:${obj.name}, ${obj.meal().mealName}, ${obj.formattedPrice()}`)
+      }
+      self.afterAdd = function (ele, index, obj) {
+        //因为ele也包括标签之间的空白textNode, 即`#text`, 
+        //如果不限制nodeType, 则没add一个item, 这里将显示3次console
+        if (ele.nodeType === 1) {
+          $(ele).hide().fadeIn(1000);
+          console.log('afterAdd:index:' + index + 'name:' + obj.name)
+        }
+      }
+      //如果制订了beforeRemove, 需要手动去删除Dom节点! 
+      //常见场景比如使用jQuery’的 $(domNode).fadeOut()来给删除节点添加动画— 在这种情况下, Knockout 不能知道DOM节点实际上要多久才会删除（谁知道你的动画会占多少时间），所以应该由您删除DOM节点
+      self.beforeRemove = function (ele, index, obj) {
+        if (ele.nodeType === 1) {
+          $(ele).fadeOut(1000, function () {
+            this.remove();//!!!!!!
+          });
+          console.log('beforeRemove:index:' + index + 'name:' + obj.name)
+        }
+      }
+      self.beforeMove = function (ele, index, obj) {
+        if (ele.nodeType === 1) {
+          console.log('beforeMove:index:' + index + 'name:' + obj.name)
+        }
+      }
+      self.afterMove = function (ele, index, obj) {
+        if (ele.nodeType === 1) {
+          console.log('afterMove:index:' + index + 'name:' + obj.name)
+        }
+      }
+    }
+
+
+
+    ko.applyBindings(new ReservationsViewModel());
+  </script>
+</body>
+
+</html>

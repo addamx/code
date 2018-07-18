@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>component</title>
+  <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h4>First instance, without parameters</h4>
+  <div data-bind='component: "message-editor"'></div>
+
+  <h4>Second instance, passing parameters</h4>
+  <div data-bind='component: {
+        name: "message-editor",
+        params: { initialText: "Hello, world!" }
+    }'></div>
+
+  <br>
+  <div data-bind='component: {
+      name: "special-offer",
+      params: { productName: "pure-template" }
+ }'>
+    <strong>loading!</strong><!-- 这里的内容属于未编译或者ko编译中断/失败的默认内容-->
+  </div>
+
+  <br>
+  <special-offer params='productName: "pure-template without container-ele 1"'></special-offer>
+
+  <br>
+  <!-- ko component: {
+    name: "special-offer",
+    params: {productName: "pure-template without container-ele 2"}
+  } -->
+  <!-- /ko -->
+
+
+
+  <script>
+    ko.components.register('message-editor', {
+      viewModel: function (params) {
+        this.text = ko.observable(params && params.initialText || '');
+      },
+      template: 'Message: <input data-bind="value: text" /> '
+        + '(length: <span data-bind="text: text().length"></span>)'
+    });
+
+    //可以没有viewModel
+    ko.components.register('special-offer', {
+      template: '<div class="offer-box" data-bind="text: productName"></div>'
+    });
+
+    ko.applyBindings();
+  </script>
+</body>
+
+</html>

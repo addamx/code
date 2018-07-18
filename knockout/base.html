@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>base</title>
+  <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+</head>
+
+<body>
+
+  <div>
+    <p>First name:
+      <strong data-bind="text: firstName"></strong>
+      <input data-bind="value: firstName" />
+    </p>
+    <p>Last name:
+      <strong data-bind="text: lastName"></strong>
+    </p>
+    <button data-bind="click: capitalizeLastName">capitalize firstName + LastName</button>
+    <p>Full name:
+      <strong data-bind="text: fullName"></strong>
+      <input data-bind="textInput: fullName" />
+    </p>
+  </div>
+  <script>
+    function AppViewModel() {
+      this.firstName = ko.observable("Bert"); //input-mode
+      // this.lastName = "Bertington";   //静态
+      this.lastName = ko.observable("Bertington");
+      this.fullName = ko.computed(function () {    //computed state
+        return this.firstName() + " " + this.lastName;
+      }, this);
+      //上面的情况其实纯函数, 所以可以修改成ko.pureComputed
+      this.fullName = ko.pureComputed(function () {
+        return this.firstName() + " " + this.lastName();
+      }, this);
+      //或者
+      //this.fullName = ko.pureComputed(function () {
+      //....
+      //}, this, { pure: true })
+      this.fullName = ko.pureComputed({
+        read: function () {
+          return this.firstName() + " " + this.lastName();
+        },
+        write: function (value) {
+          var lastSpacePos = value.lastIndexOf(" ");
+          if (lastSpacePos > 0) { // 忽略无内容
+            this.firstName(value.substring(0, lastSpacePos)); // 更新"firstName"的值
+            this.lastName(value.substring(lastSpacePos + 1)); // 更新"lastName"的值
+          }
+        },
+        owner: this
+      });
+
+
+      //method
+      this.capitalizeLastName = function () {
+        this.lastName(this.lastName().toUpperCase());
+      };
+
+
+      //订阅数据变化
+      var subscription = this.firstName.subscribe(function (newValue) {
+        console.log('firstName new-value: ' + newValue);
+      });
+      this.fullName.subscribe(function (oldValue) {
+        console.log("The person's previous name is " + oldValue);
+      }, null, "beforeChange");
+      // subscription.dispose(); // 停止订阅
+
+      //依赖监控通常只有在值实际改变时才进行通知, 以下修改强制通知
+      //方便测试性能
+      this.firstName.extend({ notify: 'always' });
+      // 确保每50毫秒内通知改变不超过一次
+      this.firstName.extend({ rateLimit: 50 });
+
+
+      //KO的observableArray具有自己的等价函数，它们更有用:
+      //indexOf, splice, pop, push, shift, unshift, reverse, sort, splice
+      this.myObservableArray = ko.observableArray();    // 初始化空数组
+      this.myObservableArray.push('Some value');            // 添加值并通知监控
+      //新增的方法
+      this.myObservableArray.remove('someItem') //— 删除所有等于someItem的值，并将它们作为数组返回。
+      this.myObservableArray.remove(function (item) { return item.age < 18; }) //— 删除所有age属性小于18的值，并将它们作为数组返回。
+      this.myObservableArray.removeAll(['Chad', 132, undefined]) //— 删除所有等于'Chad'，123或undefined的值 ，并将它们作为数组返回。
+      this.myObservableArray.removeAll() //— 删除所有值并将其作为数组返回
+
+
+      //工具函数
+      // ko.isComputed //是否计算监控值
+      // ko.isPureComputed 
+      // ko.isObservable //是否监控对象/数组
+      // ko.isWritableObservable  //监控对象，监控数组和可写计算监控
+
+
+      //ko.computedContext来获取当前计算监控属性的信息
+      this.myComputed = ko.computed(function () {
+        var isFirstEvaluation = ko.computedContext.isInitial(),
+          dependencyCount = ko.computedContext.getDependenciesCount();
+        console.log("Evaluating " + (isFirstEvaluation ? "for the first time" : "again"));
+        console.log("By now, this computed has " + dependencyCount + " dependencies");
+        
+      }, this);
+
+    }
+    ko.applyBindings(new AppViewModel());
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

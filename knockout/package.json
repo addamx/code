@@ -1,0 +1,22 @@
+{
+  "name": "knockout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addamx/knockout.git"
+  },
+  "author": "Addamx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/addamx/knockout/issues"
+  },
+  "homepage": "https://github.com/addamx/knockout#readme",
+  "dependencies": {
+    "knockout": "^3.4.2"
+  }
+}
