@@ -1,0 +1,47 @@
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "no description",
+  "author": "Addams X <haoranclover@gmail.com>",
+  "keywords": [
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/utatti/my-package"
+  },
+  "bugs": {
+    "url": "https://github.com/utatti/my-package/issues"
+  },
+  "jspm": {
+    "main": "dist/my-package.common.js",
+    "registry": "jspm"
+  },
+  "main": "dist/my-package.common.js",
+  "module": "dist/my-package.esm.js",
+  "typings": "types/my-package.d.ts",
+  "style": "css/my-package.css",
+  "files": [
+    "css",
+    "dist",
+    "src",
+    "types"
+  ],
+  "devDependencies": {
+    "chokidar-cli": "^1.2.0",
+    "prettier": "^1.13.7",
+    "rollup": "^0.63.4",
+    "rollup-plugin-buble": "^0.19.2",
+    "uglify-js": "^3.4.5"
+  },
+  "scripts": {
+    "test": "npm run format:lint && npm run build",
+    "build": "npm run clean && node build",
+    "clean": "rm -rf dist",
+    "watch": "npm run build && SHELL=/bin/bash chokidar 'src/**/*.js' -c 'npm run format && npm run build'",
+    "format": "prettier --write --single-quote --trailing-comma es5 'src/**/*.js'",
+    "format:lint": "prettier -l --single-quote --trailing-comma es5 'src/**/*.js'",
+    "release": "./release"
+  },
+  "license": "MIT"
+}
