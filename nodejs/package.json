@@ -10,8 +10,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.16.2",
+    "express": "^4.16.4",
     "mockjs": "^1.0.1-beta3",
     "mongoose": "^5.0.1"
+  },
+  "dependencies": {
+    "global": "^4.3.2",
+    "jsonwebtoken": "^8.4.0",
+    "jwt": "^0.2.0",
+    "nodeman": "^1.1.2",
+    "nodemon": "^1.18.6"
   }
 }

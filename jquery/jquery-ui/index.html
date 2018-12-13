@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jquery ui</title>
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/jquery-ui.js"></script>
+</head>
+<body>
+
+<div id="test">
+  <div class="hover">.hover</div>
+  <div class="remove">.remove</div>
+  <div class="class">.class @click</div>
+  <input type="text" class="focus" placeholder=".foucus">
+</div>
+  
+<script>
+/**
+ * http://api.jqueryui.com/jQuery.widget
+ **/
+$.widget('vendor.test', {
+  version: '0.0.1',
+  options: {
+    cusOp: 'default',
+    // special options
+    classes: {
+      key: 'value',
+      enabled: '-enabled'
+    }
+  },
+
+  /* this.classesElementLookup 如下:
+  它方便在destroy时移除所有的className, 
+  并且允许$('.hover').trigger('remove') 让classesElementLookup移除$('.hover')的dom
+{
+  enabled: jQuery.fn.init []
+  key: jQuery.fn.init [div#test.plain-class.key.value]
+  noClass: jQuery.fn.init []
+  plain-class: jQuery.fn.init [div#test.plain-class.key.value]
+  ui-state-hover: jQuery.fn.init [div.hover.ui-state-hover]
+  vendor-test-disabled: jQuery.fn.init []
+}
+  */
+
+  /**
+   * interface in this._createWidget
+   **/
+  _create: function() {
+    console.log('_created()');
+    console.table(this.options);
+
+    // 参数可以是函数或者成员函数的名字
+    this._delay(() => {
+      console.log('_delay()');
+    }, 100);
+
+    // add ui-state-focus class
+    this._focusable(this.element.find('.focus'));
+
+    // add ui-state-hover class
+    this._hoverable(this.element.find('.hover'));
+
+    // hide elem by boolean(or option val), then callback
+    this._hide(this.element.find('.remove'), true, function() {
+      console.log('.remove has been hidden');
+    });
+
+    // [element ], (keys,|| extra)
+    // extra的classname不需查找options.classes
+    this._addClass(null, 'plain-class'); // add 'plain-cass' className
+    this._addClass('key');  //add 'key value' className
+    this._removeClass('noClass');  //remove 'key value' className
+
+    // [suppressDisabledCheck, ]element, handlers
+    // [是否停止检查disable option, ]element, {
+    //   'click': function(){...},
+    //   'click .child-selector': 'methodName'(可以是成员变量名)
+    // }
+    this._on(this.element, {
+      'click .class': 'switchClass',  // eventName = 'click.test0'
+      'cus-method': function() {  // eventName = 'cus-method'
+        console.log(arguments);
+      }
+    });
+
+    this._setOption('cusOp', 'newValue');
+    this._setOption('classes', ['enabled']);
+    this._setOption('style', {'background-color': '#efefef'});  // custom method
+
+    this.enable();  // this._setOptions({disabled: false});
+    //this.disable();  // this._setOptions({disabled: true});
+
+    // type[, event][, data]
+    // event.type: 'testcreated'
+    // $('#test').on('testcreated', (event) => {...})
+    this._trigger('created', null, 'vvvv'); 
+  },
+
+  switchClass: (function() {
+    var bool = true;
+
+    return function(ev) {
+      var $elm = $(ev.target);
+
+      // []element, ](keys,||extra)[, add]
+      this._toggleClass($elm, 'enabled'); // 默认一开始 add == false
+      //this._toggleClass($elm, 'enabled', null, bool);
+      //bool = !bool;
+    }
+  })(),
+
+  // 扩展_setOption: 
+  _setOption: function(key, value) {
+    if (key === 'style') {
+      this.element.css(value);
+    }
+    this._super(...arguments);
+    // this._superApply(arguments);
+  },
+
+  /**
+   * interface in this.destroy;
+   * after _destory(), this.destory will 
+   **/
+  _destroy: function() {
+    console.log('_destroy()');
+
+    // 除了给event添加eventNamespace, 还从this.bindings & this.focusable & this.hoverable移除这些elm, 避免内存泄漏
+    this._off(this.element.find('.click'), 'click');
+  },
+
+  /**
+   * interface ?
+   **/
+  _getCreateEventData: function() {
+    return {eventData: 'test'};
+  },
+
+  /**
+   * override default option, but still could be overrided by custom option
+   **/
+  _getCreateOptions: function() {
+    return {
+      cusOp: 'createOp'
+    }
+  },
+
+  /**
+   * Create之后会执行一次, 以后每次 `$elm.vendorTest()`(没有参数) 或者 `$elm.vendorTest({cusOp: 'abc'})`(带options对象)也会执行一次
+   **/
+  _init: function() {
+    console.log('_init()');
+  }
+});
+
+$('#test').on('testcreate', function(){
+  console.log('testcreate');  //_create()之后, init()之前
+});
+
+$('#test').test();
+// $.vendor.test({...});
+
+// console.log($('#test').data().vendorTest);
+</script>
+</body>
+</html>

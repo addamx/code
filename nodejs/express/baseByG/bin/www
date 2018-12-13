@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('expressgenerator:server');
+var debug = require('debug')('basebyg:server');
 var http = require('http');
 
 /**
