@@ -1,7 +1,6 @@
 /*
 1. assert方法接受两个参数，当第一个参数对应的布尔值为true时，不会有任何提示，返回undefined。当第一个参数对应的布尔值为false时，会抛出一个错误，该错误的提示信息就是第二个参数设定的字符串。
 */
-
 var assert = require('assert');
 
 function add(a, b) {return a + b;}
@@ -88,7 +87,7 @@ function sayHello(name, callback) {
   var error = false;
   var str   = "Hello "+name;
 //   error = true;
-  
+
   callback(error, str);
 }
 

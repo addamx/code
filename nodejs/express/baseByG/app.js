@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); // 支持编码为表单的请求消息体
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

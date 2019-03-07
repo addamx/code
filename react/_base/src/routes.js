@@ -7,7 +7,7 @@ import Refs from './component/Refs'
 import Life from './component/Life'
 import FilterTable from './component/FilterTable'
 import TestPureComponent from './component/TestPureComponent'
-import Style from './component/style'
+import Style from './component/Style'
 
 import asyncComponent from './component/wrapper/AsyncComponent'
 

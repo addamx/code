@@ -105,7 +105,7 @@ child_process.spawn(command, [args], [options])
  * fork(): 使用node执行js文件, 并并建立通信通道
  * fork('./child.js') 相当于 spawn('node', ['./child.js'])
  * fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
- * 
+ *
  * 通信方法:
  * send()
  */

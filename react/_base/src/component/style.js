@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Button from './Button';
 
-export default class Style extends Component {
-
+class Style extends Component {
   render() {
     return (
       <div>
-
+        <Button/>
       </div>
-    )
+    );
   }
 }
+
+export default Style;

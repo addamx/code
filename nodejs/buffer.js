@@ -67,7 +67,7 @@ console.log('INPUT: ' + chunk);
     Buffer.isBuffer(Date) //false
 
 //  byteLength 字符串实际占据的字节长度
-    Buffer.byteLength('Hello', 'utf8') // 5 
+    Buffer.byteLength('Hello', 'utf8') // 5
 
 // concat 将一组Buffer对象合并为一个Buffer对象。
     var i1 = new Buffer('Hello');
@@ -75,7 +75,7 @@ console.log('INPUT: ' + chunk);
     var i3 = new Buffer('World');
     Buffer.concat([i1, i2, i3]).toString()  // 'Hello World'
     //第二个参数，指定合并后Buffer对象的总长度。省略第二个参数时，Node内部会计算出这个值，然后再据此进行合并运算。因此，显式提供这个参数，能提供运行速度。
-    console.log(Buffer.concat([i1, i2, i3], 10).toString()) // 'Hello Worl' 
+    console.log(Buffer.concat([i1, i2, i3], 10).toString()) // 'Hello Worl'
 
 
 

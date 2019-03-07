@@ -1,0 +1,24 @@
+{
+  "name": "react-storybook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "storybook": "start-storybook -p 8080 -c .storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-info": "^4.1.7",
+    "@storybook/addon-knobs": "^4.1.7",
+    "@storybook/addons": "^4.1.7",
+    "@storybook/react": "^4.1.7",
+    "@types/react": "^16.7.20",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^6.26.3",
+    "storybook-addon-jsx": "^6.0.0",
+    "typescript": "^3.2.4"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
