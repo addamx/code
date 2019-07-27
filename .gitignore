@@ -60,3 +60,5 @@ typings/
 # other
 .vscode
 dist/
+build
+built

@@ -101,7 +101,7 @@
       // 拷贝一份原来的prototype数据
       _proto: $.extend({}, prototype),
 
-      // 如果当前widget是已定义的, 这里用于保存曾经继承它的widget 
+      // 如果当前widget是已定义的, 这里用于保存曾经继承它的widget
       // Track widgets that inherit from this widget in case this widget is
       // redefined after a widget inherits from it
       _childConstructors: []

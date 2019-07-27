@@ -1,0 +1,113 @@
+import fs from "fs";
+import Router from "koa-router";
+import { BaseContext } from "koa";
+import Koa from "koa";
+
+export class Loader {
+  router: Router = new Router();
+  controller: any = {};
+  app: Koa;
+
+  constructor(app: Koa) {
+    this.app = app;
+  }
+
+  loadController() {
+    const dirs = fs.readdirSync(__dirname + "/controller");
+    dirs.forEach(filename => {
+      if (filename.endsWith(".js")) {
+        const property = filename.split(".")[0];
+        const mod = require(__dirname + "/controller/" + filename).default;
+        if (mod) {
+          const methodNames = Object.getOwnPropertyNames(mod.prototype).filter(name => {
+            if (name !== "constructor") {
+              return name;
+            }
+          });
+          Object.defineProperty(this.controller, property, {
+            get() {
+              const merge: { [key: string]: any } = {};
+              methodNames.forEach(name => {
+                merge[name] = {
+                  type: mod,
+                  methodName: name
+                };
+              });
+              return merge;
+            }
+          });
+        }
+      }
+    });
+  }
+
+  loadRouter() {
+    this.loadController();
+    this.loadService();
+    this.loadConfig();
+
+    const mod = require(__dirname + "/router.js");
+    const routers = mod(this.controller);
+    /*
+    routers = {
+      "get /": this.controller.user.user, // controller.[文件名].[方法名]
+      "get /userinfo": this.controller.user.userinfo
+    }
+    this.constroller.base = {}
+    this.controller.user = {
+      user: {type: [User类], methodName: 'user'},
+      userInfo: {type: [User类], methodName: 'userInfo'}
+    }
+    */
+    Object.keys(routers).forEach(key => {
+      const [method, path] = key.split(" ");
+
+      (<any>this.router)[method](path, async (ctx: BaseContext) => {
+        const _class = routers[key].type;
+        const hanlder = routers[key].methodName;
+        const instance = new _class(ctx, this.app);
+        instance[hanlder]();
+      });
+    });
+    return this.router.routes();
+  }
+
+  // 在controller中使用this.ctx.service.check.index()
+  loadService() {
+    const service = fs.readdirSync(__dirname + "/service");
+    let that = this;
+
+    Object.defineProperty(this.app.context, "service", {
+      get() {
+        if (!(<any>this)["cache"]) {
+          (<any>this)["cache"] = {};
+        }
+        const loaded = (<any>this)["cache"];
+        if (!loaded["service"]) {
+          loaded["service"] = {};
+          service.forEach(d => {
+            if (d.endsWith(".js")) {
+              const name = d.split(".")[0];
+              const mod = require(__dirname + "/service/" + d);
+              loaded["service"][name] = new mod(this, that.app);
+            }
+          });
+        }
+        return loaded.service;
+      }
+    });
+  }
+
+  loadConfig() {
+    const configDef = __dirname + "/config/config.default.js";
+    const configEnv = __dirname + (process.env.NODE_ENV === "production" ? "/config/config.pro.js" : "/config/config.dev.js");
+    const confDef = require(configDef);
+    const conf = require(configEnv);
+    const merge = Object.assign({}, confDef, conf);
+    Object.defineProperty(this.app, "config", {
+      get: () => {
+        return merge;
+      }
+    });
+  }
+}

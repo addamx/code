@@ -27,7 +27,6 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { isBlocking } = this.state
 
     return (
@@ -40,6 +39,7 @@ class Form extends React.Component {
           })
         }}
       >
+      {/* Prompt 在离开Route时触发, 使用form输入过程中离开 */}
         <Prompt
           when={isBlocking}
           message={location => (

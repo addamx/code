@@ -1,0 +1,6 @@
+module.exports = (controller: any) => {
+  return {
+    "get /": controller.user.user, // controller.[文件名].[方法名]
+    "get /userinfo": controller.user.userInfo
+  };
+};
