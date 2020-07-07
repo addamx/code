@@ -5,12 +5,12 @@ export default class Module {
    * @param {Class} service
    * @param {Class} model
    */
-  constructor(name, service, model) {
+  constructor({ name, service, model }) {
     this.name = name;
     this.service = service;
     this.model = model;
   }
   init() {
-
+    console.log(`${this.name}: init`);
   }
 }

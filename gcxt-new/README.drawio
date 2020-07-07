@@ -1,6 +1,6 @@
-<mxfile host="" modified="2020-07-05T23:15:51.422Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.46.1 Chrome/78.0.3904.130 Electron/7.3.1 Safari/537.36" etag="mjq9byZv6PDru1ISy9ew" version="13.1.3" pages="4">
+<mxfile host="" modified="2020-07-07T02:21:29.419Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.46.1 Chrome/78.0.3904.130 Electron/7.3.1 Safari/537.36" etag="IxEWXyk2bWQ5sFfwjH2t" version="13.1.3" pages="4">
     <diagram id="6hGFLwfOUW9BJ-s0fimq" name="Page-1">
-        <mxGraphModel dx="1567" dy="687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="581" dy="497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -23,52 +23,30 @@
         </mxGraphModel>
     </diagram>
     <diagram id="W7t235hSdav5Il7xjK4u" name="Business 子组件">
-        &#xa;        &#xa;        &#xa;        
-        <mxGraphModel dx="1210" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-            &#xa;            &#xa;            &#xa;            
+        <mxGraphModel dx="581" dy="497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-0"/>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-1" parent="VZzGFX7L0MtHda5SXJiP-0"/>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="VZzGFX7L0MtHda5SXJiP-1" source="VZzGFX7L0MtHda5SXJiP-2" target="VZzGFX7L0MtHda5SXJiP-3" edge="1">
-                    &#xa;                    &#xa;                    &#xa;                    
                     <mxGeometry relative="1" as="geometry"/>
-                    &#xa;                    &#xa;                &#xa;                
                 </mxCell>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-2" value="业务组件" style="rounded=0;whiteSpace=wrap;html=1;" parent="VZzGFX7L0MtHda5SXJiP-1" vertex="1">
-                    &#xa;                    &#xa;                    &#xa;                    
                     <mxGeometry x="230" y="390" width="120" height="60" as="geometry"/>
-                    &#xa;                    &#xa;                &#xa;                
                 </mxCell>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-3" value="纯UI组件*n" style="rounded=0;whiteSpace=wrap;html=1;" parent="VZzGFX7L0MtHda5SXJiP-1" vertex="1">
-                    &#xa;                    &#xa;                    &#xa;                    
                     <mxGeometry x="420" y="390" width="120" height="60" as="geometry"/>
-                    &#xa;                    &#xa;                &#xa;                
                 </mxCell>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-5" value="业务Model原型" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;" parent="VZzGFX7L0MtHda5SXJiP-1" vertex="1">
-                    &#xa;                    &#xa;                    &#xa;                    
                     <mxGeometry x="230" y="100" width="120" height="80" as="geometry"/>
-                    &#xa;                    &#xa;                &#xa;                
                 </mxCell>
-                &#xa;                &#xa;                &#xa;                
                 <mxCell id="VZzGFX7L0MtHda5SXJiP-6" value="业务Service" style="rounded=0;whiteSpace=wrap;html=1;" parent="VZzGFX7L0MtHda5SXJiP-1" vertex="1">
-                    &#xa;                    &#xa;                    &#xa;                    
                     <mxGeometry x="230" y="240" width="120" height="60" as="geometry"/>
-                    &#xa;                    &#xa;                &#xa;                
                 </mxCell>
-                &#xa;                &#xa;            &#xa;            
             </root>
-            &#xa;            &#xa;        &#xa;        
         </mxGraphModel>
-        &#xa;        &#xa;    &#xa;    
     </diagram>
     <diagram id="UJn4xRIJK_C6If08vIeA" name="Page-3">
-        <mxGraphModel dx="3906" dy="687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
+        <mxGraphModel dx="2718" dy="497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
             <root>
                 <mxCell id="sKjG2z_jizI5xqlPLZgd-0"/>
                 <mxCell id="sKjG2z_jizI5xqlPLZgd-1" parent="sKjG2z_jizI5xqlPLZgd-0"/>
@@ -127,7 +105,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="LnhaIiv8nrn30YEiqH6e" name="Page-4">
-        <mxGraphModel dx="1567" dy="687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
+        <mxGraphModel dx="379" dy="497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
             <root>
                 <mxCell id="FQ_uFHgkaTQrJqErBFoK-0"/>
                 <mxCell id="FQ_uFHgkaTQrJqErBFoK-1" parent="FQ_uFHgkaTQrJqErBFoK-0"/>
