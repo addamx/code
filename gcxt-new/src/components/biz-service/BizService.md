@@ -24,14 +24,16 @@ plugins
 ```
 
 # Plugin
-1. Store
+1. $Store
 拿到module，生成页面用的store
+暴露数据结构
 
-2. eventBus
+2. $eventBus
 "field_changed","editForm_changed","editForm_inited"
+提供修改数据的方法
 
-3. effect
-Effect:
+3. $effect
+根据
 1. 根据行为定义
 eg.
 ```js
@@ -40,3 +42,10 @@ eg.
   fun
 }
 ```
+
+4. $components
+注册业务组件
+  - 注入store
+
+5. $hook
+在$effect 执行前后添加hook
