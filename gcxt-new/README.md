@@ -1,6 +1,10 @@
 # TODO
 [] 如何通过插槽插入个性化组件，修改颗粒度更细的组件
-
+[] 个性化Hook
+    - 修改、拦截model值改变的操作
+[] 个性化组件
+    - slot
+  
 新增业务功能
 1. 新增一个组件，拉取API获取初始值，渲染，校验，保存提交业务值到Detail，编辑时从Detail中回复
   - 组件的业务逻辑可能受其他组件的影响，包括API获取初始值，校验规则
@@ -15,19 +19,15 @@
 - 提供配置
   - 需要的注册模块
   - 提供模块配置
-  - 个性化Hook
-    - 修改、拦截model值改变的操作
-  - 个性化组件
-    - slot
-- 初始化 Business 模块
-
-# store
-钩子：改变前，改变后
+- 调用BizService
+  1. 注册store
+  2. 注册事件以及副作用
+  3. 注册业务组件
 
 
-
-# Business Service
+# Business Edit Service
 ## 初始化
+
 - 管理子模块
   - 根据配置注册模块
   - 初始化模块的 Model 至 Business Model
@@ -43,7 +43,7 @@
 - 提供 Detail
 
 # Business Component（Edit/Detail）
-- Watch
+
 
 # Business 子模块
 - Model：由Business Model 关联
