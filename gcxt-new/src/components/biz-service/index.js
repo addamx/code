@@ -1,4 +1,4 @@
-import module from './module';
+import module from "./module";
 
 /**
  * 页面组件控制器
@@ -30,6 +30,12 @@ export default class BizService {
       module.init();
     });
     this.isInited = true;
+  }
+  execAction(fnName, ...args) {
+
+  }
+  getComponentInstance(fieldId) {
+
   }
 }
 

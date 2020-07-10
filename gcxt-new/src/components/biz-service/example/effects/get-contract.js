@@ -4,12 +4,13 @@ export default {
   /**
    * contract_id: payload, value, option
    */
-  deps: ["editForm.contract_id"],
+  deps: ["SET_editForm.contract_id"],
   exec: (commit, store) => {
-    const contractIds = commit;
+    const contractIds = commit[0];
     return getContractById(contractIds).then(res => {
       store.contracts = res;
-      store.editForm.contract_id.valueObj = contractIds;
+      store.editForm.contract_id.valueObj = res;
+      dispatch("SET_contracts", res);
     });
   }
 };
