@@ -1,7 +1,6 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const fs = require('fs');
-
+const fs = require("fs");
 
 //app.use(express.static(__dirname + '/public'))
 
@@ -14,7 +13,7 @@ const fs = require('fs');
  * use()
  * use是express注册中间件的方法，它返回一个函数
  */
-(function(){
+(function () {
   app.use(function (request, response, next) {
     console.log("In comes a " + request.method + " to " + request.url);
     next();
@@ -35,9 +34,9 @@ const fs = require('fs');
   });
   //简写: app.use('/path', someMiddleware); [不匹配自动调用next]
   app.use("/home1", function (request, response, next) {
-    response.status(200).send('Welcome to the homepage(1)!\n')
+    response.status(200).send("Welcome to the homepage(1)!\n");
   });
-})()
+})();
 
 /**
  * 1. 可以用别名 *, /user/:id
@@ -55,9 +54,6 @@ app.get("*", function (request, response) {
  * app.get(), app.post(), app.delete()
  */
 
-
-
-
 /**
  * set()
  * 设定系统变量
@@ -65,12 +61,10 @@ app.get("*", function (request, response) {
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
 
-
-
 /**
  * response对象
  */
-(function(){
+(function () {
   //（1）response.redirect方法
   response.redirect("/hello/anime");
   response.redirect("http://www.example.com");
@@ -86,34 +80,29 @@ app.set("view engine", "jade");
 /**
  * request对象
  */
-(function(){
+(function () {
   //request.ip属性用于获得HTTP请求的IP地址。
   request.ip;
   //request.files用于获取上传的文件。
   request.files;
 });
 
-
 /**
  * HTTPs服务器
  */
-var https = require('https');
-var httpsServer = function() {
-
+var https = require("https");
+var httpsServer = function () {
   var options = {
-    key: fs.readFileSync('E:/ssl/myserver.key'),
-    cert: fs.readFileSync('E:/ssl/myserver.crt'),
-    passphrase: '1234'
+    key: fs.readFileSync("E:/ssl/myserver.key"),
+    cert: fs.readFileSync("E:/ssl/myserver.crt"),
+    passphrase: "1234",
   };
 
   var server = https.createServer(options, app);
-}
+};
 
-
-
-
-var server = app.listen(8000, function(){
+var server = app.listen(8000, function () {
   var host = server.address().address;
   var port = server.address().port;
-  console.log('app listening at http://%s:%s', host, port);
-})
+  console.log("app listening at http://%s:%s", host, port);
+});
