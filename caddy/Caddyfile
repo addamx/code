@@ -1,0 +1,8 @@
+http://local.com/api {
+  reverse_proxy http://127.0.0.1:9311 {
+    header_up Host http://127.0.0.1:9311
+    header_down Access-Control-Allow-Origin *
+    header_down Access-Control-Allow-Methods *
+    header_down Access-Control-Allow-Headers *
+  }
+}
