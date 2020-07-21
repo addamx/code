@@ -1,4 +1,4 @@
-http://local.com/api {
+http://local.com/pending {
   reverse_proxy http://127.0.0.1:9311 {
     header_up Host http://127.0.0.1:9311
     header_down Access-Control-Allow-Origin *

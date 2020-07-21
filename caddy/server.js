@@ -15,6 +15,14 @@ app.get("/customer", function (req, res) {
 app.get("/admin", function (req, res) {
   res.send("admin page");
 });
+app.get("/pending", function (req, res) {
+  console.log("waiting....");
+  new Promise((resolve) => {
+    setTimeout(() => {
+      res.send("done!!!");
+    }, 5000);
+  });
+});
 app.get("*", function (request, response) {
   response.end("404!");
 });
