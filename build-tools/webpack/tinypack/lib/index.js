@@ -45,7 +45,7 @@ function getDependence (ast) {
  */
 function getTranslateCode(ast) {
   const {code} = transformFromAst(ast, null, {
-    presets: ['env']
+    presets: ['@babel/preset-env']
   });
   return code
 }
@@ -85,6 +85,7 @@ function getQueue(main) {
 }
 
 function bundle(queue) {
+  console.log("bundle -> queue", queue)
   let modules = ''
   queue.forEach(function (mod) {
     modules += `'${mod.fileName}': function (require, module, exports) { ${mod.code} },`

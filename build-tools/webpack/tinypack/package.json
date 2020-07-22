@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "origin": "webpack --mode development",
+    "start": "node ./bin/pack",
     "debug": "node --inspect-brk=0.0.0.0:8080 ./bin/pack"
   },
   "keywords": [],
