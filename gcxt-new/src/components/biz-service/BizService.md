@@ -49,3 +49,6 @@ eg.
 
 5. $hook
 在$effect 执行前后添加hook
+
+# 数据传输中
+- 要不要DTO检查，转model

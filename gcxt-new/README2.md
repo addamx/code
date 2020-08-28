@@ -27,3 +27,19 @@ plugin里需要存储上一次的结果，是一个类；
 
 # 数据池dp
 ctx.dp.getValue(key)
+
+
+
+# 业务流程代码复杂的原因
+
+# 解决方案
+- 建立模型，精简判断代码
+- 使用一种新的设计模式代替if/else，
+
+# 思想
+- saas 趋向配置化
+- nestjs 模块化
+
+# tools
+- plantUml
+- mobx (class 转 state management)8
