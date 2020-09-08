@@ -72,7 +72,6 @@ const builds = {
   'web-runtime-esm': {
     entry: resolve('web/entry-runtime.js'),
     dest: resolve('dist/vue.runtime.esm.js'),
-    sourceMap: true,
     format: 'es',
     banner
   },
@@ -227,7 +226,6 @@ function genConfig (name) {
       file: opts.dest,
       format: opts.format,
       banner: opts.banner,
-      sourcemap: true,
       name: opts.moduleName || 'Vue'
     },
     onwarn: (msg, warn) => {
