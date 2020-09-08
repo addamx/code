@@ -18,7 +18,7 @@ plugin里需要存储上一次的结果，是一个类；
 - event > 确定修改的store值 > 进入相关effect
 - 多重依赖（一个事件循环内）：
   - eg. flow分支依赖多个条件
-  - 1. setTimeout 在新的事件循环 触发effect
+  - 1. 在新的事件循环 触发effect
   - 2. 合并触发表单素有字段改变（只针对表单）
   - 3. 初始化时，合并触发条件
 
@@ -40,6 +40,3 @@ ctx.dp.getValue(key)
 - saas 趋向配置化
 - nestjs 模块化
 
-# tools
-- plantUml
-- mobx (class 转 state management)8

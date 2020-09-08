@@ -51,16 +51,6 @@ form
 插件系统
  - 参考：webpack，vue
 
-业务控制包
- - 【需要再考虑必要性】所有需要改变store的操作，应该在更新阶段最后才真正触发
- - 初始化
- - 更新阶段
-  - eg
-    - 字段发生变化时，selectBiz+contract_id -> 请求 contract -> 存入store ->
-      - 【依赖contract】的其他联动：
-        - contract字段的text、subtext
-        - 会议纪要的重置text，value
-
 
 依赖注入器
 - 注入service
