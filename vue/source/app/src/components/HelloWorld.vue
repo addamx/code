@@ -2,14 +2,23 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div><button @click="changeMsg('changeMsg')">changeMsg</button></div>
+    <child>
+    </child>
   </div>
 </template>
 
 <script>
+import Child from "./child";
+import passSlots, { resetSharedSlots } from "../mixins/pass-slots";
+
 export default {
   name: "HelloWorld",
+  mixins: [passSlots],
+  components: {
+    Child,
+  },
   props: {
-    msg: String,
+    // msg: String,
   },
   data() {
     return {
@@ -25,6 +34,9 @@ export default {
     twoMsg() {
       return this.msg + this.msg;
     },
+  },
+  beforeCreate() {
+    resetSharedSlots();
   },
   mounted() {
     window.helloTest = this;
