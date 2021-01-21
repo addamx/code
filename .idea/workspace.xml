@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ac12696c-5865-49a3-8933-01e2dd62c4ef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/vue/source/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/vue/dist/vue.runtime.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/vue/dist/vue.runtime.esm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/vue/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/vue/src/core/instance/lifecycle.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/vue/src/core/instance/lifecycle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/source/app/vue/src/core/instance/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue/source/app/vue/src/core/instance/render.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1lmB8zkmpnHrmzhwVclnOzlxq1p" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/vue/source/app/vue/node_modules/typescript/lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac12696c-5865-49a3-8933-01e2dd62c4ef" name="Default Changelist" comment="" />
+      <created>1608192230991</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608192230991</updated>
+      <workItem from="1608192232142" duration="10871000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/typescript/src/module-namespace/np-base.js" />
+        <option value="$PROJECT_DIR$/storybook/react-storybook/src/Button.js" />
+      </list>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2107" y="295" width="586" height="490" key="find.popup" timestamp="1608623722059">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2107" y="295" width="586" height="490" key="find.popup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1608623722059" />
+    <state x="2065" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1608198931293">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2065" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1608198931293" />
+  </component>
+</project>
