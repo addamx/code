@@ -10,6 +10,12 @@
       </template>
     </HelloWorld>
 
+    <span>c:{{c}}</span>
+    <span>b: {{b}}</span>
+    <p>{{renderD()}}</p>
+    <button @click="a = a + 1">a+</button>
+    <button @click="b = b + 1">b+</button>
+
   </div>
 </template>
 
@@ -26,11 +32,25 @@ export default {
   data() {
     return {
       test: 123123,
+      a: 1,
+      b: 2
     };
+  },
+  computed: {
+    c() {
+      console.log(111)
+      return this.a + 1;
+    }
   },
   mounted() {
     window.appTest = this;
   },
+  methods: {
+    renderD() {
+      console.log('renderD')
+      return 'dfd';
+    }
+  }
 };
 </script>
 
